@@ -1,0 +1,16 @@
+apiVersion: v1
+entries:
+  cardano-node:
+  - apiVersion: v2
+    created: "2021-03-13T07:40:14.309743-06:00"
+    description: Creates a single relay or producer cardano node
+    digest: b779d647098fdd77e3ba57e4df1f81880ec3308eb1912e89af4cf320d14f0005
+    icon: https://gotostaking.com/favicon.ico
+    keywords:
+    - cardano
+    name: cardano-node
+    type: application
+    urls:
+    - releases/cardano-node-0.0.1.tgz
+    version: 0.0.1
+generated: "2021-03-13T07:40:14.309134-06:00"

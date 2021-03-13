@@ -1,0 +1,57 @@
+labels: {}
+categories:
+  - Cardano
+questions:
+  - variable: stateVolumeStorageClassName
+    label: State Volume Storage Class Name
+    required: true
+    type: storageclass
+  - variable: configsTopologyJson
+    label: Topology JSON
+    type: multiline
+    required: true
+    default: |-
+      {
+        "Producers": [
+          {
+            "addr": "relay1.gotostaking.com",
+            "port": 4444,
+            "valency": 1
+          },
+          {
+            "addr": "relays-new.cardano-mainnet.iohk.io",
+            "port": 3001,
+            "valency": 2
+          }
+        ]
+      }
+  - variable: nodeVersion
+    label: Node Version
+    type: enum
+    required: true
+    default: 1.25.1
+    options:
+      - 1.25.1
+      - 1.24.2
+  - variable: nodeType
+    label: Node Type
+    type: enum
+    required: true
+    default: relay
+    options:
+      - relay
+      - producer
+    show_subquestion_if: producer
+    subquestions:
+      - variable: producerCertificatesKesSKey
+        label: KES Signing Key
+        type: multiline
+        required: true
+      - variable: producerCertificatesVrfSKey
+        label: VRF Signing Key
+        type: multiline
+        required: true
+      - variable: producerCertificatesNodeCert
+        label: Node Operating Certficate
+        type: multiline
+        required: true

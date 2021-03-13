@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-state
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: {{ .Values.nodeType }}
+    app.kubernetes.io/name: cardano-node
+spec:
+  storageClassName: {{ .Values.stateVolumeStorageClassName }}
+  accessModes: [{{ .Values.stateVolumeAccessMode }}]
+  resources:
+    requests:
+      storage: {{ .Values.stateVolumeSize }}

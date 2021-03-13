@@ -1,0 +1,39 @@
+configsTopologyJson: |-
+  {
+    "Producers": [
+      {
+        "addr": "relay1.gotostaking.com",
+        "port": 4444,
+        "valency": 1
+      },
+      {
+        "addr": "relays-new.cardano-mainnet.iohk.io",
+        "port": 3001,
+        "valency": 2
+      }
+    ]
+  }
+
+configsByronGenesisUrl: https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest-finished/download/1/mainnet-byron-genesis.json
+configsShelleyGenesisUrl: https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest-finished/download/1/mainnet-shelley-genesis.json
+
+metricsPort: 12798
+
+# node
+nodePort: 4444
+nodeVersion: 1.25.1
+
+# volumes
+stateVolumeStorageClassName: default
+stateVolumeAccessMode: ReadWriteOnce
+stateVolumeSize: 24Gi
+
+# requests
+requestsCpu: 2000m
+requestsMemory: 4Gi
+
+# limits
+limitsCpu: 2000m
+limitsMemory: 4Gi
+
+nodeType: relay

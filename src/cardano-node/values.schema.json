@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "required": [],
+  "properties": {
+    "configsTopologyJson": {
+      "type": "string"
+    },
+    "metricsPort": {
+      "type": "integer",
+      "default": 12798
+    },
+    "nodePort": {
+      "type": "integer",
+      "default": 4444
+    },
+    "nodeVersion": {
+      "type": "string",
+      "default": "1.25.1",
+      "enum": [
+        "1.24.2",
+        "1.25.1"
+      ]
+    },
+    "serviceName": {
+      "type": "string"
+    },
+    "stateVolumeStorageClassName": {
+      "type": "string",
+      "default": "default"
+    },
+    "stateVolumeAccessMode": {
+      "type": "string",
+      "default": "ReadWriteOnce"
+    },
+    "stateVolumeSize": {
+      "type": "string",
+      "default": "24Gi"
+    },
+    "requestsCpu": {
+      "type": "string",
+      "default": "2000m"
+    },
+    "requestsMemory": {
+      "type": "string",
+      "default": "4Gi"
+    },
+    "limitsCpu": {
+      "type": "string",
+      "default": "2000m"
+    },
+    "limitsMemory": {
+      "type": "string",
+      "default": "4Gi"
+    },
+    "nodeType": {
+      "type": "string",
+      "default": "relay",
+      "enum": [
+        "producer",
+        "relay"
+      ]
+    },
+    "producerCertificatesKesSKey": {
+      "type": "string"
+    },
+    "producerCertificatesVrfSKey": {
+      "type": "string"
+    },
+    "producerCertificatesNodeCert": {
+      "type": "string"
+    }
+  }
+}

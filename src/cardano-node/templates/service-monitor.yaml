@@ -1,0 +1,23 @@
+# https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: {{ .Values.nodeType }}
+    app.kubernetes.io/name: cardano-node
+spec:
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: {{ .Values.nodeType }}
+      app.kubernetes.io/name: cardano-node
+  endpoints:
+    - path: /metrics
+      port: metrics
+      interval: 15s

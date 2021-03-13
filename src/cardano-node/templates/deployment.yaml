@@ -1,0 +1,118 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: {{ .Values.nodeType }}
+    app.kubernetes.io/name: cardano-node
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: {{ .Values.nodeType }}
+      app.kubernetes.io/name: cardano-node
+
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/component: {{ .Values.nodeType }}
+        app.kubernetes.io/name: cardano-node
+    spec:
+      volumes:
+        - name: state
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-state
+        - name: configs
+          configMap:
+            name: {{ .Release.Name }}-configs
+        - name: scripts
+          configMap:
+            name: {{ .Release.Name }}-scripts
+            defaultMode: 0777
+        {{- if eq .Values.nodeType "producer" }}
+        - name: certificates
+          secret:
+            secretName: {{ .Release.Name }}-certificates
+            defaultMode: 0700
+        {{- end }}
+
+      containers:
+        - name: node
+          image: registry.gitlab.com/viper-staking/docker-containers/cardano-node:{{ .Values.nodeVersion }}
+
+          command:
+            - /bin/bash
+          args:
+            - -c
+            - /scripts/entry.sh
+
+          resources:
+            requests:
+              cpu: {{ .Values.requestsCpu }}
+              memory: {{ .Values.requestsMemory }}
+            limits:
+              cpu: {{ .Values.limitsCpu}}
+              memory: {{ .Values.limitsMemory }}
+
+          env:
+            - name: CARDANO_NODE_SOCKET_PATH
+              value: /home/lovelace/node.socket
+
+          ports:
+            - name: cardano
+              protocol: TCP
+              containerPort: {{ .Values.nodePort }}
+            - name: metrics
+              protocol: TCP
+              containerPort: {{ .Values.metricsPort }}
+
+          volumeMounts:
+            - name: state
+              mountPath: /var/lib/cardano-node/db
+            - name: configs
+              subPath: config.json
+              mountPath: /etc/cardano-node/config.json
+            - name: configs
+              subPath: topology.json
+              mountPath: /etc/cardano-node/topology.json
+            - name: scripts
+              subPath: entry.sh
+              mountPath: /scripts/entry.sh
+            {{- if eq .Values.nodeType "producer" }}
+            - name: certificates
+              subPath: kes.skey
+              mountPath: /etc/cardano-node/kes.skey
+            - name: certificates
+              subPath: vrf.skey
+              mountPath: /etc/cardano-node/vrf.skey
+            - name: certificates
+              subPath: node.cert
+              mountPath: /etc/cardano-node/node.cert
+            {{- end }}
+
+          securityContext:
+            runAsUser: 0
+
+    # TODO: Work out selector/affinity
+    # affinity:
+    #   nodeAffinity:
+    #     requiredDuringSchedulingIgnoredDuringExecution:
+    #       nodeSelectorTerms:
+    #         - matchExpressions:
+    #           - key: "service"
+    #             operator: "In"
+    #             values: [ "cardano" ]
+    #         - matchExpressions:
+    #           - key: "role"
+    #             operator: "In"
+    #             values: [ "relays" ]
+
+    # volumes:
+
+
+

@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-scripts
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: {{ .Values.nodeType }}
+    app.kubernetes.io/name: cardano-node
+data:
+  "entry.sh": |-
+    #!/bin/bash
+    set -e
+
+    chmod 777 /var/lib/cardano-node/db
+    mkdir -p /var/lib/cardano-node/db/content
+
+    # remove magic block that prevents app from starting automatically
+    if [ -f "/var/lib/cardano-node/db/content/lock" ]; then
+      rm /var/lib/cardano-node/db/content/lock
+    fi
+
+    wget -P /etc/cardano-node/ "{{ .Values.configsByronGenesisUrl }}"
+    wget -P /etc/cardano-node/ "{{ .Values.configsShelleyGenesisUrl }}"
+
+    cardano-node run \
+      --topology "/etc/cardano-node/topology.json" \
+      --database-path "/var/lib/cardano-node/db/content" \
+      --socket-path "/home/lovelace/node.socket" \
+      --host-addr "0.0.0.0" \
+      --port "4444" \
+      {{- if eq .Values.nodeType "producer" }}
+      --shelley-kes-key "/etc/cardano-node/kes.skey" \
+      --shelley-vrf-key "/etc/cardano-node/vrf.skey" \
+      --shelley-operational-certificate "/etc/cardano-node/node.cert" \
+      {{- end }}
+      --config "/etc/cardano-node/config.json"

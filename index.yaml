@@ -2,15 +2,15 @@ apiVersion: v1
 entries:
   cardano-node:
   - apiVersion: v2
-    created: "2021-03-13T07:40:14.309743-06:00"
+    created: "2021-03-13T07:44:30.125363-06:00"
     description: Creates a single relay or producer cardano node
-    digest: b779d647098fdd77e3ba57e4df1f81880ec3308eb1912e89af4cf320d14f0005
+    digest: 7dea0c51af544e1708b264d47e769e633be7ece457875aae51f2c89e0fb8012f
     icon: https://gotostaking.com/favicon.ico
     keywords:
     - cardano
     name: cardano-node
     type: application
     urls:
-    - releases/cardano-node-0.0.1.tgz
+    - https://raw.githubusercontent.com/stakeit-cloud/public-charts/main/releases/cardano-node-0.0.1.tgz
     version: 0.0.1
-generated: "2021-03-13T07:40:14.309134-06:00"
+generated: "2021-03-13T07:44:30.124795-06:00"

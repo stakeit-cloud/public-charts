@@ -97,22 +97,3 @@ spec:
 
           securityContext:
             runAsUser: 0
-
-    # TODO: Work out selector/affinity
-    # affinity:
-    #   nodeAffinity:
-    #     requiredDuringSchedulingIgnoredDuringExecution:
-    #       nodeSelectorTerms:
-    #         - matchExpressions:
-    #           - key: "service"
-    #             operator: "In"
-    #             values: [ "cardano" ]
-    #         - matchExpressions:
-    #           - key: "role"
-    #             operator: "In"
-    #             values: [ "relays" ]
-
-    # volumes:
-
-
-

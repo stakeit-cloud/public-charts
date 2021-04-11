@@ -43,7 +43,7 @@ data:
       "TraceLocalHandshake": false,
       "TraceLocalTxSubmissionProtocol": false,
       "TraceLocalTxSubmissionServer": false,
-      "TraceMempool": true,
+      "TraceMempool": false,
       "TraceMux": false,
       "TraceTxInbound": false,
       "TraceTxOutbound": false,

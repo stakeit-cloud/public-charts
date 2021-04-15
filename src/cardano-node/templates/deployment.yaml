@@ -9,6 +9,8 @@ metadata:
     app.kubernetes.io/name: cardano-node
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
 
   selector:
     matchLabels:

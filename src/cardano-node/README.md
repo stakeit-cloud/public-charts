@@ -19,7 +19,7 @@ Creates a single of producer or relay cardano node.
 | metricsPort | port to use for metrics | 12798 |
 | nodeCount | number of replicas to create, note that running more than one producer node is not recommended | 1 |
 | nodePort | port to use for cardano node | 4444 |
-| nodeVersion | the version of cardano-node to run | 1.25.1 |
+| nodeVersion | the version of cardano-node to run | 1.26.1 |
 | serviceName | name for the service that exposes the node(s) within the cluster | {{ .Release.Name }} |
 | stateVolumeStorageClassName | the storage class to use for storing state in | default |
 | stateVolumeAccessMode | the access mode for state volume | ReadWriteOnce |

@@ -1,7 +1,7 @@
 apiVersion: v2
 name: cardano-node
 icon: https://gotostaking.com/favicon.ico
-version: 0.0.2
+version: 0.1.0
 # kubeVersion: A SemVer range of compatible Kubernetes versions (optional)
 description: Creates a single relay or producer cardano node
 type: application

@@ -21,7 +21,7 @@ metricsPort: 12798
 
 # node
 nodePort: 4444
-nodeVersion: 1.26.1
+nodeVersion: 1.26.2
 
 # volumes
 stateVolumeStorageClassName: default
